@@ -1,0 +1,44 @@
+name: Docker Registry
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3.13.0
+        with:
+          distribution: "adopt"
+          java-version: 17
+
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.1.1
+        with:
+          name: Agencia Citel API
+          path: target
+
+      - name: Build the Docker image
+        run: docker build -t citel-api .
+
+      - name: "Configure AWS Credentials"
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_SECRET_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+
+      - name: "Tag Image"
+        run: docker tag citel-api:latest 497176797028.dkr.ecr.us-east-1.amazonaws.com/citel-api:latest
+
+      - name: "Login to AWS ECR"
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 497176797028.dkr.ecr.us-east-1.amazonaws.com/citel-api:latest
+
+      - name: Push image to AWS ECR
+        run: docker push 497176797028.dkr.ecr.us-east-1.amazonaws.com/citel-api:latest
+
+      - name: Download Image to EC2
+        run: docker push 4497176797028.dkr.ecr.us-east-1.amazonaws.com/citel-api:latest
