@@ -14,10 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.citel.api.commons.exceptions.GenericException;
 import com.citel.api.http.dto.CandidatoDTO;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
+import com.citel.api.http.dto.IdadeMediaPorTipoSanguineo;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.http.dto.PercentualDeObesoPorSexoDTO;
 import com.citel.api.models.candidato.Candidato;
+import com.citel.api.models.candidato.TipoSanguineo;
 import com.citel.api.repository.CandidatoRepository;
 
 @Service
@@ -82,6 +84,26 @@ public class CandidatoService {
     listaDeObesoPorSexoDTO.add(new PercentualDeObesoPorSexoDTO("Mulheres", (long) percentualMulheres));
 
     return listaDeObesoPorSexoDTO;
+  }
+
+  public List<IdadeMediaPorTipoSanguineo> idadeMediaPorTipoSanguineo() {
+
+    List<Candidato> listaCandidatos = candidatoRepository.findAll();
+
+    if (listaCandidatos.isEmpty()) {
+      throw new GenericException("Nenhum Candidato Encontrado");
+    }
+
+    List<IdadeMediaPorTipoSanguineo> listaIdadePorTipo = new ArrayList<>();
+
+    for (TipoSanguineo tipoSanguineo : TipoSanguineo.values()) {
+      Long mediaDeIdade = CandidatoServiceFilter.calcularIdadeMediaPorTipoSanguineo(listaCandidatos,
+          tipoSanguineo.getTipo());
+
+      listaIdadePorTipo.add(new IdadeMediaPorTipoSanguineo(tipoSanguineo.getTipo(), mediaDeIdade));
+    }
+
+    return listaIdadePorTipo;
   }
 
 }

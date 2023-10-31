@@ -1,5 +1,6 @@
 package com.citel.api.controllers.candidato;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.citel.api.http.dto.CandidatoPorEstadoDTO;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.http.dto.PercentualDeObesoPorSexoDTO;
+import com.citel.api.http.dto.IdadeMediaPorTipoSanguineo;
 import com.citel.api.services.candidato.CandidatoService;
 
 @RestController
@@ -56,5 +58,14 @@ public class CandidatoController {
   public List<PercentualDeObesoPorSexoDTO> percentualObesoPorSexo() {
 
     return candidatoService.percentualObesoPorSexo();
+  }
+
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping("/idade-media-tipo-sanguineo")
+  public List<IdadeMediaPorTipoSanguineo> idadeMediaPorTipoSanguineo() {
+
+    return candidatoService.idadeMediaPorTipoSanguineo();
+
   }
 }

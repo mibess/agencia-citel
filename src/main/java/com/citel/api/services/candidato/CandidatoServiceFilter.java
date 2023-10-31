@@ -66,4 +66,20 @@ public class CandidatoServiceFilter {
 
     return ((double) listaCandidatosObesos.size() / listaCandidatos.size()) * 100;
   }
+
+  public static List<Candidato> listaPorTipoSanguineo(List<Candidato> listaCandidatos, String tipoSanguineo) {
+    return listaCandidatos.stream()
+        .filter(c -> c.getTipoSanguineo().equals(tipoSanguineo))
+        .collect(Collectors.toList());
+  }
+
+  public static Long calcularIdadeMediaPorTipoSanguineo(List<Candidato> listaCandidatos, String tipoSanguineo) {
+    List<Candidato> candidatos = CandidatoServiceFilter.listaPorTipoSanguineo(listaCandidatos, tipoSanguineo);
+
+    Long mediaDeIdade = candidatos.stream()
+        .mapToLong(c -> c.getIdade()).sum();
+
+    mediaDeIdade = mediaDeIdade / candidatos.size();
+    return mediaDeIdade;
+  }
 }

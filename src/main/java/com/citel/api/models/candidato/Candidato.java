@@ -5,6 +5,8 @@ import java.time.Period;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,10 +29,7 @@ public class Candidato {
   private String nome;
   private String cpf;
   private String rg;
-
-  // @Column(name = "data_nascimento")
   private LocalDate dataNascimento;
-
   private String sexo;
   private String mae;
   private String pai;
@@ -39,14 +38,11 @@ public class Candidato {
   @Embedded
   private Endereco endereco;
 
-  // @Column(name = "telefone_fixo")
   private String telefoneFixo;
-
   private String celular;
   private Double altura;
   private Long peso;
 
-  // @Column(name = "tipo_sanguineo")
   private String tipoSanguineo;
 
   public Long getIdade() {

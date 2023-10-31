@@ -3,8 +3,10 @@ package com.citel.api.http.dto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.citel.api.commons.exceptions.GenericException;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.models.candidato.Endereco;
+import com.citel.api.models.candidato.TipoSanguineo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
