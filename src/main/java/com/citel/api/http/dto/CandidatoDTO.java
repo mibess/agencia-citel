@@ -35,7 +35,7 @@ public class CandidatoDTO {
   @JsonProperty("telefone_fixo")
   private String telefoneFixo;
   private String celular;
-  private Long altura;
+  private Double altura;
   private Long peso;
   @JsonProperty("tipo_sanguineo")
   private String tipoSanguineo;

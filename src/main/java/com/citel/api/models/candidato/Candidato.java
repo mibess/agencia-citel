@@ -1,6 +1,7 @@
 package com.citel.api.models.candidato;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -42,10 +43,15 @@ public class Candidato {
   private String telefoneFixo;
 
   private String celular;
-  private Long altura;
+  private Double altura;
   private Long peso;
 
   // @Column(name = "tipo_sanguineo")
   private String tipoSanguineo;
 
+  public Long getIdade() {
+    Period periodo = Period.between(this.dataNascimento, LocalDate.now());
+
+    return Long.valueOf(periodo.getYears());
+  }
 }

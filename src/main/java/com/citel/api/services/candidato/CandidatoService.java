@@ -1,7 +1,10 @@
 package com.citel.api.services.candidato;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.citel.api.commons.exceptions.GenericException;
 import com.citel.api.http.dto.CandidatoDTO;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
+import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.repository.CandidatoRepository;
@@ -48,6 +52,18 @@ public class CandidatoService {
   public List<CandidatoPorEstadoDTO> candidatosPorEstado() {
 
     return candidatoRepository.findCandidatosByEstado();
+  }
+
+  public List<ImcPorFaixaDeIdadeDeDezAnosDTO> candidatosPorImcFaixaDeIdadeDeDezAnos() {
+
+    List<Candidato> listaCandidatos = candidatoRepository.findAll();
+
+    if (listaCandidatos.isEmpty()) {
+      throw new GenericException("Nenhum Candidato Encontrado");
+    }
+
+    return CandidatoServiceFilter.calcularImcPorFaixaDeIdade(listaCandidatos);
+
   }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.citel.api.commons.http.client.DadosClient;
 import com.citel.api.http.dto.CandidatoDTO;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
+import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.services.candidato.CandidatoService;
 
@@ -38,5 +39,13 @@ public class CandidatoController {
   public List<CandidatoPorEstadoDTO> listaCandidatosPorEstado() {
 
     return candidatoService.candidatosPorEstado();
+  }
+
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping("/imc-por-faixa-idade")
+  public List<ImcPorFaixaDeIdadeDeDezAnosDTO> imcPorFaixaIdade() {
+
+    return candidatoService.candidatosPorImcFaixaDeIdadeDeDezAnos();
   }
 }
