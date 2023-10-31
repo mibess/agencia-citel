@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.citel.api.commons.http.client.DadosClient;
 import com.citel.api.http.dto.CandidatoDTO;
+import com.citel.api.http.dto.CandidatoPorEstadoDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.services.candidato.CandidatoService;
 
@@ -31,4 +32,11 @@ public class CandidatoController {
     return candidatoService.salvarLista(listaCandidatoDtos);
   }
 
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping("/por-estado")
+  public List<CandidatoPorEstadoDTO> listaCandidatosPorEstado() {
+
+    return candidatoService.candidatosPorEstado();
+  }
 }

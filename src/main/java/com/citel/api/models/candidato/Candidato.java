@@ -2,9 +2,6 @@ package com.citel.api.models.candidato;
 
 import java.time.LocalDate;
 
-import com.citel.api.http.dto.CandidatoDTO;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

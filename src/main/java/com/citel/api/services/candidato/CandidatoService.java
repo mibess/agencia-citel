@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.citel.api.commons.exceptions.GenericException;
 import com.citel.api.http.dto.CandidatoDTO;
+import com.citel.api.http.dto.CandidatoPorEstadoDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.repository.CandidatoRepository;
@@ -42,6 +43,11 @@ public class CandidatoService {
 
     return new ImportacaoCompletaDTO(Long.valueOf(candidatosSalvos.size()), "Importação concluída com Sucesso!");
 
+  }
+
+  public List<CandidatoPorEstadoDTO> candidatosPorEstado() {
+
+    return candidatoRepository.findCandidatosByEstado();
   }
 
 }
