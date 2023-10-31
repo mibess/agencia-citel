@@ -14,6 +14,7 @@ import com.citel.api.http.dto.CandidatoDTO;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
+import com.citel.api.http.dto.PercentualDeObesoPorSexoDTO;
 import com.citel.api.services.candidato.CandidatoService;
 
 @RestController
@@ -47,5 +48,13 @@ public class CandidatoController {
   public List<ImcPorFaixaDeIdadeDeDezAnosDTO> imcPorFaixaIdade() {
 
     return candidatoService.candidatosPorImcFaixaDeIdadeDeDezAnos();
+  }
+
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping("/percentual-obesidade-por-sexo")
+  public List<PercentualDeObesoPorSexoDTO> percentualObesoPorSexo() {
+
+    return candidatoService.percentualObesoPorSexo();
   }
 }

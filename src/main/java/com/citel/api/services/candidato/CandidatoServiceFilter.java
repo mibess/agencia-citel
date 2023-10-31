@@ -50,7 +50,20 @@ public class CandidatoServiceFilter {
         .collect(Collectors.toList());
   }
 
+  public static List<Candidato> listaCanditatosObesos(List<Candidato> listaCandidatos) {
+    return listaCandidatos.stream()
+        .filter(c -> calcularImc(c.getPeso(), c.getAltura()) > 30)
+        .collect(Collectors.toList());
+  }
+
   private static double calcularImc(Long peso, Double altura) {
     return peso / (altura * altura);
+  }
+
+  public static double calcularPercentualDeObesidade(List<Candidato> listaCandidatos) {
+
+    List<Candidato> listaCandidatosObesos = listaCanditatosObesos(listaCandidatos);
+
+    return ((double) listaCandidatosObesos.size() / listaCandidatos.size()) * 100;
   }
 }

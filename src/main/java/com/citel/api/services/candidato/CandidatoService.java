@@ -16,6 +16,7 @@ import com.citel.api.http.dto.CandidatoDTO;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
+import com.citel.api.http.dto.PercentualDeObesoPorSexoDTO;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.repository.CandidatoRepository;
 
@@ -64,6 +65,23 @@ public class CandidatoService {
 
     return CandidatoServiceFilter.calcularImcPorFaixaDeIdade(listaCandidatos);
 
+  }
+
+  public List<PercentualDeObesoPorSexoDTO> percentualObesoPorSexo() {
+
+    // Busca todas os Homens e Mulheres do Banco de Dados
+    List<Candidato> listaHomens = candidatoRepository.findBySexo("Masculino");
+    List<Candidato> listaMulheres = candidatoRepository.findBySexo("Feminino");
+
+    double percentualHomens = CandidatoServiceFilter.calcularPercentualDeObesidade(listaHomens);
+    double percentualMulheres = CandidatoServiceFilter.calcularPercentualDeObesidade(listaMulheres);
+
+    List<PercentualDeObesoPorSexoDTO> listaDeObesoPorSexoDTO = new ArrayList<>();
+
+    listaDeObesoPorSexoDTO.add(new PercentualDeObesoPorSexoDTO("Homens", (long) percentualHomens));
+    listaDeObesoPorSexoDTO.add(new PercentualDeObesoPorSexoDTO("Mulheres", (long) percentualMulheres));
+
+    return listaDeObesoPorSexoDTO;
   }
 
 }

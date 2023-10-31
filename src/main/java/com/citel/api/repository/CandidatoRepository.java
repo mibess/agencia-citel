@@ -16,4 +16,6 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
   @Query("SELECT NEW com.citel.api.http.dto.CandidatoPorEstadoDTO(COUNT(c) AS quantidade, c.endereco.estado AS estado) FROM Candidato c GROUP BY c.endereco.estado")
   List<CandidatoPorEstadoDTO> findCandidatosByEstado();
 
+  List<Candidato> findBySexo(String string);
+
 }
