@@ -18,6 +18,7 @@ import com.citel.api.http.dto.IdadeMediaPorTipoSanguineo;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.http.dto.PercentualDeObesoPorSexoDTO;
+import com.citel.api.http.dto.QuantidadePossivelDoadorDTO;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.models.candidato.TipoSanguineo;
 import com.citel.api.repository.CandidatoRepository;
@@ -104,6 +105,27 @@ public class CandidatoService {
     }
 
     return listaIdadePorTipo;
+  }
+
+  public List<QuantidadePossivelDoadorDTO> listaDePossiveisDoadores() {
+    List<Candidato> listaCandidatos = candidatoRepository.findByPesoGreaterThan(50L);
+
+    if (listaCandidatos.isEmpty()) {
+      throw new GenericException("Nenhum Candidato com peso adequado foi encontrado");
+    }
+
+    List<Candidato> listaAdeptosParaDoacao = CandidatoServiceFilter.listaAdeptosParaDoacao(listaCandidatos);
+
+    List<QuantidadePossivelDoadorDTO> quantidadeDeDoadores = new ArrayList<>();
+
+    for (TipoSanguineo tipoSanguineo : TipoSanguineo.values()) {
+
+      Long quantidade = CandidatoServiceFilter.filtrarDoadores(listaAdeptosParaDoacao, tipoSanguineo.getTipo());
+
+      quantidadeDeDoadores.add(new QuantidadePossivelDoadorDTO(tipoSanguineo.getTipo(), quantidade));
+    }
+
+    return quantidadeDeDoadores;
   }
 
 }

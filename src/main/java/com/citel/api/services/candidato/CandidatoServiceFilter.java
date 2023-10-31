@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.hibernate.sql.ast.tree.expression.Collation;
-
+import com.citel.api.commons.statics.TipoSanguineoRecebedor;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.models.candidato.Candidato;
 
@@ -82,4 +81,22 @@ public class CandidatoServiceFilter {
     mediaDeIdade = mediaDeIdade / candidatos.size();
     return mediaDeIdade;
   }
+
+  public static List<Candidato> listaAdeptosParaDoacao(List<Candidato> listaCandidatos) {
+    return listaCandidatos.stream()
+        .filter(c -> c.getIdade() >= 16 && c.getIdade() <= 69)
+        .collect(Collectors.toList());
+  }
+
+  public static Long filtrarDoadores(List<Candidato> listaCandidatos, String tipoSanguineo) {
+
+    List<String> tiposAceitaveis = TipoSanguineoRecebedor.aceita(tipoSanguineo);
+    List<Candidato> candidatos = listaCandidatos.stream()
+        .filter(c -> tiposAceitaveis.contains(c.getTipoSanguineo()))
+        .collect(Collectors.toList());
+
+    return (long) candidatos.size();
+
+  }
+
 }
