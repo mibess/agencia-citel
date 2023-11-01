@@ -12,13 +12,12 @@ import com.citel.api.http.input.CandidatoInput;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.models.candidato.Endereco;
 
-@Component
 public class CandidatoConverter {
 
   public Candidato fromCandidatoInputToCandidato(CandidatoInput candidatoInput) {
     Candidato candidato = new Candidato();
 
-    LocalDate nascimentoTratado = LocalDate.parse(candidatoInput.getDataNasc(),
+    LocalDate nascimentoTratado = LocalDate.parse(candidatoInput.getDataNascimento(),
         DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
     Endereco enderecoEmb = new Endereco(candidatoInput.getCep(), candidatoInput.getEndereco(),

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,18 +21,17 @@ import com.citel.api.http.input.CandidatoInput;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.models.candidato.TipoSanguineo;
 import com.citel.api.repository.CandidatoRepository;
-import com.citel.api.repository.TesteRepository;
 
 @Service
 public class CandidatoService {
 
-  @Autowired
   private CandidatoRepository candidatoRepository;
 
-  private CandidatoConverter candidatoConverter = new CandidatoConverter();
+  public CandidatoService(CandidatoRepository candidatoRepository) {
+    this.candidatoRepository = candidatoRepository;
+  }
 
-  @Autowired
-  private TesteRepository testeRepository;
+  private CandidatoConverter candidatoConverter = new CandidatoConverter();
 
   @Transactional
   public CandidatoResumidoDTO salvar(CandidatoInput candidatoInput) {
@@ -58,7 +56,7 @@ public class CandidatoService {
         .map(c -> candidatoConverter.fromCandidatoImportarInputToCandidato(c))
         .collect(Collectors.toList());
 
-    testeRepository.saveAll(candidatosSalvos);
+    candidatoRepository.saveAll(candidatosSalvos);
 
     return new ImportacaoCompletaDTO(Long.valueOf(candidatosSalvos.size()), "Importação concluída com Sucesso!");
 

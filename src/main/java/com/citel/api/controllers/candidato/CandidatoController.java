@@ -2,7 +2,6 @@ package com.citel.api.controllers.candidato;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.citel.api.commons.http.client.CandidatosJsonClient;
-import com.citel.api.http.dto.CandidatoDTO;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
 import com.citel.api.http.dto.CandidatoResumidoDTO;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
@@ -30,7 +28,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/candidatos")
 public class CandidatoController {
 
-  private CandidatoService candidatoService = new CandidatoService();
+  private CandidatoService candidatoService;
+
+  public CandidatoController(CandidatoService candidatoService) {
+    this.candidatoService = candidatoService;
+  }
 
   @PostMapping("/salvar")
   public CandidatoResumidoDTO salvarPessoa(@RequestBody @Valid CandidatoInput candidatoInput) {
