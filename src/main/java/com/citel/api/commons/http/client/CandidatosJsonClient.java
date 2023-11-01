@@ -16,7 +16,7 @@ import com.citel.api.http.dto.CandidatoDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class DadosClient {
+public class CandidatosJsonClient {
   private static final String ENDPOINT = "https://citel-bucket.s3.amazonaws.com/candidatos.json";
 
   public List<CandidatoDTO> buscaCandidatos() {

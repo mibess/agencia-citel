@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.citel.api.commons.http.client.DadosClient;
+import com.citel.api.commons.http.client.CandidatosJsonClient;
 import com.citel.api.http.dto.CandidatoDTO;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
@@ -31,7 +31,7 @@ public class CandidatoController {
   @RequestMapping("/importar")
   public ImportacaoCompletaDTO importarDados() {
 
-    List<CandidatoDTO> listaCandidatoDtos = new DadosClient().buscaCandidatos();
+    List<CandidatoDTO> listaCandidatoDtos = new CandidatosJsonClient().buscaCandidatos();
 
     return candidatoService.salvarLista(listaCandidatoDtos);
   }

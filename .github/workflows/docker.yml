@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  build:
+  registry-ecs:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,6 +39,3 @@ jobs:
 
       - name: Push image to AWS ECR
         run: docker push 497176797028.dkr.ecr.us-east-1.amazonaws.com/citel-api:latest
-
-      - name: Download Image to EC2
-        run: docker push 4497176797028.dkr.ecr.us-east-1.amazonaws.com/citel-api:latest
