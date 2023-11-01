@@ -31,4 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### MY IGNORES ###
 .env
+#src/main/resources/application.properties
