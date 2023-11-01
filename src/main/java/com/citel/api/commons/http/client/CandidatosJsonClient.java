@@ -12,14 +12,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import com.citel.api.commons.exceptions.GenericException;
-import com.citel.api.http.dto.CandidatoDTO;
+import com.citel.api.http.input.CandidatoImportarInput;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CandidatosJsonClient {
   private static final String ENDPOINT = "https://citel-bucket.s3.amazonaws.com/candidatos.json";
 
-  public List<CandidatoDTO> buscaCandidatos() {
+  // busca o arquivo para importar de uma url
+  public List<CandidatoImportarInput> buscaCandidatos() {
     try {
       RestTemplate restTemplate = new RestTemplate();
 
@@ -27,7 +28,7 @@ public class CandidatosJsonClient {
 
       ObjectMapper objectMapper = new ObjectMapper();
 
-      return objectMapper.readValue(jsonResponse, new TypeReference<List<CandidatoDTO>>() {
+      return objectMapper.readValue(jsonResponse, new TypeReference<List<CandidatoImportarInput>>() {
       });
 
     } catch (Exception e) {
@@ -37,12 +38,13 @@ public class CandidatosJsonClient {
 
   }
 
-  public List<CandidatoDTO> buscaCandidatosLocal() throws IOException {
-    String file = lerArquivo("files/candidatos.json"); // leitura de arquivo local
+  // busca o arquivo para importar localmente
+  public List<CandidatoImportarInput> buscaCandidatosLocal() throws IOException {
+    String file = lerArquivo("files/candidatos.json");
 
-    // Inicializa o ObjectMapper do Jackson
     ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.readValue(file, new TypeReference<List<CandidatoDTO>>() {
+
+    return objectMapper.readValue(file, new TypeReference<List<CandidatoImportarInput>>() {
     });
   }
 

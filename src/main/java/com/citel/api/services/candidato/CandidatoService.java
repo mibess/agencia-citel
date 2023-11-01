@@ -1,10 +1,7 @@
 package com.citel.api.services.candidato;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +9,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.citel.api.commons.exceptions.GenericException;
-import com.citel.api.http.dto.CandidatoDTO;
+import com.citel.api.http.converters.CandidatoConverter;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
+import com.citel.api.http.dto.CandidatoResumidoDTO;
 import com.citel.api.http.dto.IdadeMediaPorTipoSanguineo;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.http.dto.PercentualDeObesoPorSexoDTO;
 import com.citel.api.http.dto.QuantidadePossivelDoadorDTO;
+import com.citel.api.http.input.CandidatoImportarInput;
+import com.citel.api.http.input.CandidatoInput;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.models.candidato.TipoSanguineo;
 import com.citel.api.repository.CandidatoRepository;
+import com.citel.api.repository.TesteRepository;
 
 @Service
 public class CandidatoService {
@@ -29,25 +30,35 @@ public class CandidatoService {
   @Autowired
   private CandidatoRepository candidatoRepository;
 
+  private CandidatoConverter candidatoConverter = new CandidatoConverter();
+
+  @Autowired
+  private TesteRepository testeRepository;
+
   @Transactional
-  public CandidatoDTO salvar(CandidatoDTO candidatoDto) {
+  public CandidatoResumidoDTO salvar(CandidatoInput candidatoInput) {
 
-    Candidato candidato = candidatoRepository.save(candidatoDto.toCandidato());
+    Candidato candidato = candidatoRepository.save(
+        candidatoConverter.fromCandidatoInputToCandidato(candidatoInput));
 
-    return candidatoDto.fromCandidato(candidato);
+    return new CandidatoResumidoDTO(
+        candidato.getNome(),
+        candidato.getCpf(),
+        candidato.getEmail(),
+        candidato.getTipoSanguineo());
   }
 
   @Transactional
-  public ImportacaoCompletaDTO salvarLista(List<CandidatoDTO> listaCandidatoDto) {
-    if (listaCandidatoDto.isEmpty()) {
+  public ImportacaoCompletaDTO salvarLista(List<CandidatoImportarInput> listaCandidatoImportarInput) {
+    if (listaCandidatoImportarInput.isEmpty()) {
       throw new GenericException("Nenhum Registro para Importar");
     }
 
-    List<Candidato> candidatosSalvos = listaCandidatoDto.stream()
-        .map(candidato -> candidato.toCandidato())
+    List<Candidato> candidatosSalvos = listaCandidatoImportarInput.stream()
+        .map(c -> candidatoConverter.fromCandidatoImportarInputToCandidato(c))
         .collect(Collectors.toList());
 
-    candidatoRepository.saveAll(candidatosSalvos);
+    testeRepository.saveAll(candidatosSalvos);
 
     return new ImportacaoCompletaDTO(Long.valueOf(candidatosSalvos.size()), "Importação concluída com Sucesso!");
 

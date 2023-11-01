@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,28 +14,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.citel.api.commons.http.client.CandidatosJsonClient;
 import com.citel.api.http.dto.CandidatoDTO;
 import com.citel.api.http.dto.CandidatoPorEstadoDTO;
+import com.citel.api.http.dto.CandidatoResumidoDTO;
 import com.citel.api.http.dto.ImcPorFaixaDeIdadeDeDezAnosDTO;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.http.dto.PercentualDeObesoPorSexoDTO;
 import com.citel.api.http.dto.QuantidadePossivelDoadorDTO;
+import com.citel.api.http.input.CandidatoImportarInput;
+import com.citel.api.http.input.CandidatoInput;
 import com.citel.api.http.dto.IdadeMediaPorTipoSanguineo;
 import com.citel.api.services.candidato.CandidatoService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/candidatos")
 public class CandidatoController {
 
-  @Autowired
-  private CandidatoService candidatoService;
+  private CandidatoService candidatoService = new CandidatoService();
+
+  @PostMapping("/salvar")
+  public CandidatoResumidoDTO salvarPessoa(@RequestBody @Valid CandidatoInput candidatoInput) {
+
+    return candidatoService.salvar(candidatoInput);
+
+  }
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping("/importar")
   public ImportacaoCompletaDTO importarDados() {
 
-    List<CandidatoDTO> listaCandidatoDtos = new CandidatosJsonClient().buscaCandidatos();
+    List<CandidatoImportarInput> listaCandidatoImportarInput = new CandidatosJsonClient().buscaCandidatos();
 
-    return candidatoService.salvarLista(listaCandidatoDtos);
+    return candidatoService.salvarLista(listaCandidatoImportarInput);
   }
 
   @GetMapping
