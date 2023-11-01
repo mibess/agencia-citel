@@ -147,4 +147,12 @@ public class CandidatoService {
     return quantidadeDeDoadores;
   }
 
+  public List<CandidatoResumidoDTO> listarTodos() {
+    List<Candidato> candidatos = candidatoRepository.findAll();
+
+    return candidatos.stream()
+        .map(c -> candidatoConverter.toCandidatoResumidoDTO(c))
+        .collect(Collectors.toList());
+  }
+
 }

@@ -3,6 +3,7 @@ package com.citel.api.controllers.candidato;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,10 +35,17 @@ public class CandidatoController {
     this.candidatoService = candidatoService;
   }
 
-  @PostMapping("/salvar")
-  public CandidatoResumidoDTO salvarPessoa(@RequestBody @Valid CandidatoInput candidatoInput) {
+  @GetMapping("/listar-todos")
+  public List<CandidatoResumidoDTO> listarTodos() {
 
-    return candidatoService.salvar(candidatoInput);
+    return candidatoService.listarTodos();
+
+  }
+
+  @PostMapping("/salvar")
+  public ResponseEntity<CandidatoResumidoDTO> salvar(@RequestBody @Valid CandidatoInput candidatoInput) {
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(candidatoService.salvar(candidatoInput));
 
   }
 
