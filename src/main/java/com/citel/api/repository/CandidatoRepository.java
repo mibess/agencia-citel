@@ -3,6 +3,7 @@ package com.citel.api.repository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +20,7 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
   List<Candidato> findBySexo(String string);
 
   List<Candidato> findByPesoGreaterThan(Long peso);
+
+  Optional<Candidato> findByCpf(String cpf);
 
 }

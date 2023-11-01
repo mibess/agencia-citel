@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.citel.api.commons.ErrorResponse;
 import com.citel.api.commons.GetMessagesError;
+import com.citel.api.commons.exceptions.candidato.CPFInvalidoException;
 
 @RestControllerAdvice
 public class GenericExceptionHandler {
@@ -24,11 +25,19 @@ public class GenericExceptionHandler {
 
   @ExceptionHandler(GenericException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleGenericExceptionExceptionException(GenericException ex) {
+  public ErrorResponse handleGenericException(GenericException ex) {
     List<String> errorMessages = Collections.singletonList(ex.getMessage());
 
     return new ErrorResponse(HttpStatus.BAD_REQUEST, errorMessages);
 
   }
 
+  @ExceptionHandler(CPFInvalidoException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ErrorResponse handleCPFInvalidoException(CPFInvalidoException ex) {
+    List<String> errorMessages = Collections.singletonList(ex.getMessage());
+
+    return new ErrorResponse(HttpStatus.BAD_REQUEST, errorMessages);
+
+  }
 }

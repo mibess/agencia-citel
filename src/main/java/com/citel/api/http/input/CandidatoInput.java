@@ -16,6 +16,7 @@ public class CandidatoInput {
   @NotBlank(message = "O nome não pode ser vazio")
   private String nome;
 
+  @Pattern(regexp = "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})$", message = "CPF inválido. Use o formato: 999.999.999-99")
   @NotBlank(message = "O CPF não pode ser vazio")
   private String cpf;
 

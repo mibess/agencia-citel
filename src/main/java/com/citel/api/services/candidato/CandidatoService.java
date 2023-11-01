@@ -2,6 +2,7 @@ package com.citel.api.services.candidato;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import com.citel.api.http.dto.PercentualDeObesoPorSexoDTO;
 import com.citel.api.http.dto.QuantidadePossivelDoadorDTO;
 import com.citel.api.http.input.CandidatoImportarInput;
 import com.citel.api.http.input.CandidatoInput;
+import com.citel.api.http.validations.CandidatoValidation;
 import com.citel.api.models.candidato.Candidato;
 import com.citel.api.models.candidato.TipoSanguineo;
 import com.citel.api.repository.CandidatoRepository;
@@ -35,6 +37,14 @@ public class CandidatoService {
 
   @Transactional
   public CandidatoResumidoDTO salvar(CandidatoInput candidatoInput) {
+
+    Optional<Candidato> candidatoExistente = candidatoRepository.findByCpf(candidatoInput.getCpf());
+
+    if (candidatoExistente.isPresent()) {
+      throw new GenericException("Candidato já Cadastrado no Sistema");
+    }
+
+    CandidatoValidation.validaDadosAntesDeSalvar(candidatoInput);
 
     Candidato candidato = candidatoRepository.save(
         candidatoConverter.fromCandidatoInputToCandidato(candidatoInput));
