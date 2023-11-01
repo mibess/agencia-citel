@@ -75,10 +75,9 @@ public class CandidatoServiceFilter {
   public static Long calcularIdadeMediaPorTipoSanguineo(List<Candidato> listaCandidatos, String tipoSanguineo) {
     List<Candidato> candidatos = CandidatoServiceFilter.listaPorTipoSanguineo(listaCandidatos, tipoSanguineo);
 
-    Long mediaDeIdade = candidatos.stream()
-        .mapToLong(c -> c.getIdade()).sum();
+    Long mediaDeIdade = candidatos.stream().mapToLong(c -> c.getIdade()).sum();
 
-    mediaDeIdade = mediaDeIdade / candidatos.size();
+    mediaDeIdade = (!candidatos.isEmpty()) ? mediaDeIdade / candidatos.size() : mediaDeIdade;
     return mediaDeIdade;
   }
 
