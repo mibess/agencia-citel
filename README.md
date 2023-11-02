@@ -67,6 +67,37 @@ Lista a média de idade de cada candidato por tipo sanguíneo
 
 Lista os possíveis doadores para cada tipo sanguíneo receptor
 
+## Exemplos de Erros
+
+**Validação de Cadastro de Candidatos**
+
+```
+{
+    "timestamp": "2023-11-01T23:55:08.666998947",
+    "status": 400,
+    "error": "Bad Request",
+    "messages": [
+        "Candidato já Cadastrado no Sistema"
+    ]
+}
+```
+
+**Validação do Corpo da Mensagem**
+
+```
+{
+    "timestamp": "2023-11-02T00:00:36.991850073",
+    "status": 400,
+    "error": "Bad Request",
+    "messages": [
+        "(field: dataNascimento) Formato de data inválido. Use dd/MM/yyyy",
+        "(field: sexo) O sexo deve ser 'Masculino' ou 'Feminino'",
+        "(field: cpf) CPF inválido. Use o formato: 999.999.999-99",
+        "(field: celular) Celular não pode ser vazio"
+    ]
+}
+```
+
 # Instalação Local
 
 1. **Clonar o repositório:**
