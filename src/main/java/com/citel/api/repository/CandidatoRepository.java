@@ -23,4 +23,6 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
 
   Optional<Candidato> findByCpf(String cpf);
 
+  long count();
+
 }

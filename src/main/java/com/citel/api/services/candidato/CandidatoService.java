@@ -62,6 +62,12 @@ public class CandidatoService {
       throw new GenericException("Nenhum Registro para Importar");
     }
 
+    Long quantidadeDeCandidatos = quantidadeDeCandidatos();
+
+    if (quantidadeDeCandidatos > 0) {
+      return new ImportacaoCompletaDTO(quantidadeDeCandidatos, "Sua importação já foi realizada!");
+    }
+
     List<Candidato> candidatosSalvos = listaCandidatoImportarInput.stream()
         .map(c -> candidatoConverter.fromCandidatoImportarInputToCandidato(c))
         .collect(Collectors.toList());
@@ -153,6 +159,10 @@ public class CandidatoService {
     return candidatos.stream()
         .map(c -> candidatoConverter.toCandidatoResumidoDTO(c))
         .collect(Collectors.toList());
+  }
+
+  public Long quantidadeDeCandidatos() {
+    return candidatoRepository.count();
   }
 
 }

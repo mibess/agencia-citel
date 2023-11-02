@@ -1,9 +1,6 @@
-package com.citel.api.controllers.home;
+package com.citel.api.controllers.candidato;
 
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +16,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.citel.api.controllers.candidato.CandidatoController;
 import com.citel.api.http.dto.ImportacaoCompletaDTO;
 import com.citel.api.services.candidato.CandidatoService;
 
