@@ -1,11 +1,38 @@
 version: "3.9"
 
+networks:
+  citel-network:
+    driver: bridge
+
 services:
-  postgres:
-    image: postgres
-    ports:
-      - "54321:5432"
+  citel-postgres:
+    image: postgres:15.5
     environment:
-      POSTGRES_DB: citel-teste
+      POSTGRES_DB: citel-db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123455
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - 54321:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - citel-network
+
+  citel-api:
+    build: .
+    environment:
+      DB_HOST: citel-postgres
+      DB_NAME: citel-db
+      DB_USER: postgres
+      DB_PASSWORD: 123456
+      DB_PORT: 5432
+    ports:
+      - 8080:8080
+    networks:
+      - citel-network
+    depends_on:
+      citel-postgres:
+        condition: service_healthy

@@ -8,8 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.citel.api.repository.CandidatoRepository;
-import com.citel.api.services.candidato.CandidatoService;
+import com.citel.api.domain.candidato.services.CandidatoService;
+import com.citel.api.infra.repository.CandidatoRepository;
 import com.citel.api.utils.CandidatoUtilsTest;
 
 @ExtendWith(MockitoExtension.class)

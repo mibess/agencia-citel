@@ -15,7 +15,7 @@ public class DataValidation {
   public static boolean isDataValid(String data, String pattern) {
     SimpleDateFormat sdf;
     if (pattern == null || pattern.isEmpty()) {
-      sdf = new SimpleDateFormat("yyyy-MM-dd");
+      sdf = new SimpleDateFormat("dd/MM/yyyy");
     } else {
       sdf = new SimpleDateFormat(pattern);
     }

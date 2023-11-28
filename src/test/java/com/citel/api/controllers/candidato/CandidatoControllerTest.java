@@ -16,8 +16,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.citel.api.http.dto.ImportacaoCompletaDTO;
-import com.citel.api.services.candidato.CandidatoService;
+import com.citel.api.app.controllers.candidato.CandidatoController;
+import com.citel.api.domain.candidato.dto.ImportacaoCompletaDTO;
+import com.citel.api.domain.candidato.services.CandidatoService;
 
 @ExtendWith(MockitoExtension.class)
 class CandidatoControllerTest {
@@ -36,17 +37,17 @@ class CandidatoControllerTest {
   }
 
   @Test
-  @DisplayName(value = "Deve retornar 200 ok")
+  @DisplayName(value = "Deve retornar 201 created")
   void shouldReturnOKWhenImportAFile() throws Exception {
 
-    ImportacaoCompletaDTO importacaoCompletaDTO = new ImportacaoCompletaDTO(1L, "Ok");
+    ImportacaoCompletaDTO importacaoCompletaDTO = new ImportacaoCompletaDTO(1L, "Importação Concluída");
 
-    when(candidatoService.salvarLista(Mockito.anyList()))
+    when(candidatoService.salvarListaDeCandidatos())
         .thenReturn(importacaoCompletaDTO);
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/candidatos/importar")
+    mockMvc.perform(MockMvcRequestBuilders.post("/candidatos/importar")
         .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(MockMvcResultMatchers.status().isOk());
+        .andExpect(MockMvcResultMatchers.status().isCreated());
 
   }
 

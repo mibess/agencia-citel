@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.citel.api.models.candidato.Candidato;
-import com.citel.api.models.candidato.Endereco;
+import com.citel.api.domain.candidato.Candidato;
+import com.citel.api.domain.candidato.Endereco;
 
 public class CandidatoUtilsTest {
 
