@@ -2,7 +2,8 @@ name: AWS Deploy - App
 
 on:
   push:
-    branches: ["main"]
+    #branches: ["main"] // fazer deploy somente na branch production
+    branches: ["production"] #Essa branch não existe ainda
 
 jobs:
   build:
