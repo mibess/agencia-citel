@@ -1,5 +1,7 @@
 FROM openjdk:17
-COPY . .
+WORKDIR /app
 RUN chmod +x ./mvnw
-RUN ./mvnw clean install
-ENTRYPOINT ["java", "-jar", "target/*.jar"]
+RUN ./mvnw clean package
+COPY target/*.jar /app/citel-api.jar
+EXPOSE 8080
+CMD ["java", "-jar", "citel-api.jar"]
