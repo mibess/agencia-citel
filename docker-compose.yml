@@ -3,6 +3,8 @@ version: "3.9"
 networks:
   citel-network:
     driver: bridge
+  shared-db-network:
+    external: true
 
 services:
   citel-api:
@@ -17,3 +19,4 @@ services:
       - "8181:8080"
     networks:
       - citel-network
+      - shared-db-network # necessário apenas se o banco de dados estiver em outro container docker NA MESMA REDE
